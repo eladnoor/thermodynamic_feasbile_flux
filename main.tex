@@ -1,0 +1,83 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+ 
+\title{How important is thermodynamics?}%replace X with the appropriate number
+\author{Elad Noor\\ %replace with your name
+IMSB - ETH Z\"{u}rich} %if necessary, replace with your course title
+ 
+\maketitle
+
+Here, I attempt to rewrite the details and proof of Lemma 1 from Peres et al. (2017) using Gibbs free energies instead of equilibrium constants. Also, I will avoid defining new equilibrium constants such as $\hat{K}$ which include the concentrations of external metabolites.
+
+A reaction $j$ is feasible when:
+\begin{equation}
+    \Delta_r G'_j = \Delta_r G'^\circ_j + RT \sum_{i=1}^{m} S_{ij} \ln{c_i} < 0
+\end{equation}
+where $c_i$ is the concentration of metabolite $i$, and $S_{ij}$ is its stoichiometric coefficient in this reaction. Using matrix notation, the conditions for the strict feasibility of all reactions represented in $\mathbf{S}$:
+\begin{equation}\label{eq:feasilibilty}
+    \mathbf{S}^\top \mathbf{x} < -\frac{\mathbf{\Delta_r G'^\circ_j}}{RT}
+\end{equation}
+where $\mathbf{x} \in \mathbb{R}^m$ is the vector of log concentrations ($x_i = \ln{c_i}$).
+
+We define the convex polyhedral cone of steady-state flux distributions:
+\begin{equation}
+    \mathcal{K} = \mathbb{R}_+^r \cap \ker(\mathbf{S})
+\end{equation}
+and the complete set of generating vectors of $\mathcal{K}$ as $\{\mathbf{e}_k\}_{k = 1, \ldots, k_{max}}$.
+
+\begin{lemma}{1}
+The linear inequality system Eq (\ref{eq:feasilibilty}) has a solution for $\mathbf{x}$ if and only if the vector $\mathbf{\Delta_r G'^\circ_j}$ fulfills the inequality system
+\begin{equation}
+    \forall k \in \{1,\ldots,k_{max}\}~~~~\mathbf{e}_k^\top ~\mathbf{\Delta_r G'^\circ_j} < 0
+\end{equation}
+\end{lemma}
+ 
+\begin{proof}
+In the forward direction, if we take an existing solution $\mathbf{x}$ and the multiply Eq (\ref{eq:feasilibilty}) by $\mathbf{e}_k^\top$, we would get that
+$\mathbf{e}_k^\top \mathbf{S}^\top \mathbf{x} < -~\mathbf{e}_k^\top \mathbf{\Delta_r G'^\circ_j}~/~RT$, and since $\mathbf{e}_k \in \mathcal{K} \subseteq \ker(\mathbf{S})$, the left-hand side is equal to zero. Therefore, $0 < -~\mathbf{e}_k^\top \mathbf{\Delta_r G'^\circ_j}$.
+
+In the other direction, according to the theorem of Kuhn and Fourier, if the set of inequalities comprising Eq (\ref{eq:feasilibilty}) has no solutions, then there exists $\mathbf{u} \in \mathbb{R}_+^r$ such that $\mathbf{u}^\top \mathbf{S}^\top \mathbf{x}$ vanishes, while $-\mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j}~/~RT \le 0$.
+
+Therefore, $\mathbf{u}$ must be in $\ker(\mathbf{S})$ and since it is non-negative, $\mathbf{u} \in \mathcal{K}$. As such, it can be written as a non-negative combination of the generating vectors: $\mathbf{u} = \sum_{k=1}^{k_{max}} \eta_k \mathbf{e}_k$ (where $\eta_k \ge 0$).
+
+Finally, $0 \ge -\mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j}~/~RT$ $\rightarrow$ $0 \le \mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j} = \sum_{k=1}^{k_{max}} \eta_k \mathbf{e}_k^\top \mathbf{\Delta_r G'^\circ_j}$. Since the sum is non-negative, at least one of the members in the sum must be non-negative, therefore $\exists k~\text{such that}~\mathbf{e}_k^\top \mathbf{\Delta_r G'^\circ_j} > 0$
+
+
+\end{proof}
+
+% --------------------------------------------------------------
+%     You don't have to mess with anything below this line.
+% --------------------------------------------------------------
+ 
+\end{document}
