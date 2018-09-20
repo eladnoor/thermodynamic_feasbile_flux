@@ -38,7 +38,7 @@ IMSB - ETH Z\"{u}rich} %if necessary, replace with your course title
  
 \maketitle
 
-Here, I attempt to rewrite the details and proof of Lemma 1 from Peres et al. (2017) using Gibbs free energies instead of equilibrium constants. Also, I will avoid defining new equilibrium constants such as $\hat{K}$ which include the concentrations of external metabolites.
+Here, I attempt to rewrite the details and proof of Lemma 1 from Schuster and Heinrich (1991) using Gibbs free energies instead of equilibrium constants.
 
 A reaction $j$ is feasible when:
 \begin{equation}
@@ -52,28 +52,23 @@ where $\mathbf{x} \in \mathbb{R}^m$ is the vector of log concentrations ($x_i = 
 
 We define the convex polyhedral cone of steady-state flux distributions:
 \begin{equation}
-    \mathcal{K} = \mathbb{R}_+^r \cap \ker(\mathbf{S})
+    \mathcal{K} = \mathbb{R}_+^r \cap \ker(\mathbf{S})\,.
 \end{equation}
-and the complete set of generating vectors of $\mathcal{K}$ as $\{\mathbf{e}_k\}_{k = 1, \ldots, k_{max}}$.
 
 \begin{lemma}{1}
 The linear inequality system Eq (\ref{eq:feasilibilty}) has a solution for $\mathbf{x}$ if and only if the vector $\mathbf{\Delta_r G'^\circ_j}$ fulfills the inequality system
-\begin{equation}
-    \forall k \in \{1,\ldots,k_{max}\}~~~~\mathbf{e}_k^\top ~\mathbf{\Delta_r G'^\circ_j} < 0
+\begin{equation}\label{eq:negative_product}
+    \forall \mathbf{v} \in \mathcal{K}~~~~\mathbf{v}^\top~\mathbf{\Delta_r G'^\circ_j} < 0\,.
 \end{equation}
 \end{lemma}
  
 \begin{proof}
-In the forward direction, if we take an existing solution $\mathbf{x}$ and the multiply Eq (\ref{eq:feasilibilty}) by $\mathbf{e}_k^\top$, we would get that
-$\mathbf{e}_k^\top \mathbf{S}^\top \mathbf{x} < -~\mathbf{e}_k^\top \mathbf{\Delta_r G'^\circ_j}~/~RT$, and since $\mathbf{e}_k \in \mathcal{K} \subseteq \ker(\mathbf{S})$, the left-hand side is equal to zero. Therefore, $0 < -~\mathbf{e}_k^\top \mathbf{\Delta_r G'^\circ_j}$.
+In the forward direction, if we take an existing solution $\mathbf{x}$ and the multiply Eq (\ref{eq:feasilibilty}) by $\mathbf{v}^\top$, we would get that
+$\mathbf{v}^\top \mathbf{S}^\top \mathbf{x} < -~\mathbf{v}^\top \mathbf{\Delta_r G'^\circ_j}~/~RT$, and if $\mathbf{v} \in \mathcal{K} \subseteq \ker(\mathbf{S})$, the left-hand side will be equal to zero, i.e., $0 < -~\mathbf{v}^\top \mathbf{\Delta_r G'^\circ_j}$.
 
 In the other direction, according to the theorem of Kuhn and Fourier, if the set of inequalities comprising Eq (\ref{eq:feasilibilty}) has no solutions, then there exists $\mathbf{u} \in \mathbb{R}_+^r$ such that $\mathbf{u}^\top \mathbf{S}^\top \mathbf{x}$ vanishes, while $-\mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j}~/~RT \le 0$.
 
-Therefore, $\mathbf{u}$ must be in $\ker(\mathbf{S})$ and since it is non-negative, $\mathbf{u} \in \mathcal{K}$. As such, it can be written as a non-negative combination of the generating vectors: $\mathbf{u} = \sum_{k=1}^{k_{max}} \eta_k \mathbf{e}_k$ (where $\eta_k \ge 0$).
-
-Finally, $0 \ge -\mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j}~/~RT$ $\rightarrow$ $0 \le \mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j} = \sum_{k=1}^{k_{max}} \eta_k \mathbf{e}_k^\top \mathbf{\Delta_r G'^\circ_j}$. Since the sum is non-negative, at least one of the members in the sum must be non-negative, therefore $\exists k~\text{such that}~\mathbf{e}_k^\top \mathbf{\Delta_r G'^\circ_j} > 0$
-
-
+Since $\mathbf{u}^\top \mathbf{S}^\top \mathbf{x} = 0$ for any vector $\mathbf{x}$, $\mathbf{u}$ must be in $\ker(\mathbf{S})$ and as a non-negative vector it is in $\mathcal{K}$. However, $\mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j} \ge 0$ which contradicts the the condition in Eq \ref{eq:negative_product}.
 \end{proof}
 
 % --------------------------------------------------------------
