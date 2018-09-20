@@ -7,6 +7,7 @@
  
 \usepackage[margin=1in]{geometry} 
 \usepackage{amsmath,amsthm,amssymb}
+\usepackage{url}
  
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
@@ -46,7 +47,7 @@ A reaction $j$ is feasible when:
 \end{equation}
 where $c_i$ is the concentration of metabolite $i$, and $S_{ij}$ is its stoichiometric coefficient in this reaction. Using matrix notation, the conditions for the strict feasibility of all reactions represented in $\mathbf{S}$:
 \begin{equation}\label{eq:feasilibilty}
-    \mathbf{S}^\top \mathbf{x} < -\frac{\mathbf{\Delta_r G'^\circ_j}}{RT}
+    \mathbf{S}^\top \mathbf{x} \leq -\frac{\mathbf{\Delta_r G'^\circ_j}}{RT}
 \end{equation}
 where $\mathbf{x} \in \mathbb{R}^m$ is the vector of log concentrations ($x_i = \ln{c_i}$).
 
@@ -58,18 +59,21 @@ We define the convex polyhedral cone of steady-state flux distributions:
 \begin{lemma}{1}
 The linear inequality system Eq (\ref{eq:feasilibilty}) has a solution for $\mathbf{x}$ if and only if the vector $\mathbf{\Delta_r G'^\circ_j}$ fulfills the inequality system
 \begin{equation}\label{eq:negative_product}
-    \forall \mathbf{v} \in \mathcal{K}~~~~\mathbf{v}^\top~\mathbf{\Delta_r G'^\circ_j} < 0\,.
+    \forall \mathbf{v} \in \mathcal{K}~~~~\mathbf{v}^\top~\mathbf{\Delta_r G'^\circ_j} \leq 0\,.
 \end{equation}
 \end{lemma}
  
 \begin{proof}
 In the forward direction, if we take an existing solution $\mathbf{x}$ and the multiply Eq (\ref{eq:feasilibilty}) by $\mathbf{v}^\top$, we would get that
-$\mathbf{v}^\top \mathbf{S}^\top \mathbf{x} < -~\mathbf{v}^\top \mathbf{\Delta_r G'^\circ_j}~/~RT$, and if $\mathbf{v} \in \mathcal{K} \subseteq \ker(\mathbf{S})$, the left-hand side will be equal to zero, i.e., $0 < -~\mathbf{v}^\top \mathbf{\Delta_r G'^\circ_j}$.
+$\mathbf{v}^\top \mathbf{S}^\top \mathbf{x} \leq -\mathbf{v}^\top \mathbf{\Delta_r G'^\circ_j}~/~RT$, and if $\mathbf{v} \in \mathcal{K} \subseteq \ker(\mathbf{S})$, the left-hand side will be equal to zero, i.e., $0 \leq -\mathbf{v}^\top \mathbf{\Delta_r G'^\circ_j}$.
 
-In the other direction, according to the theorem of Kuhn and Fourier, if the set of inequalities comprising Eq (\ref{eq:feasilibilty}) has no solutions, then there exists $\mathbf{u} \in \mathbb{R}_+^r$ such that $\mathbf{u}^\top \mathbf{S}^\top \mathbf{x}$ vanishes, while $-\mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j}~/~RT \le 0$.
-
-Since $\mathbf{u}^\top \mathbf{S}^\top \mathbf{x} = 0$ for any vector $\mathbf{x}$, $\mathbf{u}$ must be in $\ker(\mathbf{S})$ and as a non-negative vector it is in $\mathcal{K}$. However, $\mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j} \ge 0$ which contradicts the the condition in Eq \ref{eq:negative_product}.
+In the other direction, according to Duality theory\footnote{From the book by Boyd and Vandenberghe (2004), "Section 5.8.3", we have a simplified version of Farkas' lemma:
+\begin{lemma}{Gale}
+ If $\mathbf{A}\mathbf{x} \leq \mathbf{b}$ is unsolvable then $\exists \mathbf{y} \geq \mathbf{0}$ such that $\mathbf{y}^\top \mathbf{A} = \mathbf{0}$ and $\mathbf{y}^\top \mathbf{b} = -1$.
+\end{lemma}}
+, if Eq (\ref{eq:feasilibilty}) has no solutions, then there exists $\mathbf{u} \in \mathbb{R}_+^r$ such that $\mathbf{u}^\top \mathbf{S}^\top = \mathbf{0}$ and $-\mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j}~/~RT = -1$. Therefore $\mathbf{u}$ is in $\mathcal{K}$, but $\mathbf{u}^\top \mathbf{\Delta_r G'^\circ_j} = RT > 0$ which contradicts the the condition in Eq \ref{eq:negative_product}.
 \end{proof}
+
 
 % --------------------------------------------------------------
 %     You don't have to mess with anything below this line.
